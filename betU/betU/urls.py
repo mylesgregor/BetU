@@ -16,6 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+<<<<<<< HEAD
 from django.contrib.auth.models import User
 from rest_framework import routers, serializers, viewsets
 
@@ -35,6 +36,8 @@ class UserViewSet(viewsets.ModelViewSet):
 router = routers.DefaultRouter()
 router.register(r'users', UserViewSet)
 '''
+=======
+>>>>>>> e430f0b88c8627c4ca4657f5b35059be866ef9aa
 
 urlpatterns = [
     path("betUniversity/", include("betUniversity.urls")),

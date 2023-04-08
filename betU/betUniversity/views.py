@@ -87,3 +87,6 @@ def profile(request):
 
 
 
+
+def index(request):
+    return HttpResponse("Hello, world. You're at the betU index (homepage).")
