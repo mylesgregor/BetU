@@ -35,6 +35,11 @@ const palette = {
 
   overlay20: "rgba(25, 16, 21, 0.2)",
   overlay50: "rgba(25, 16, 21, 0.5)",
+
+  moneyGreen: '#85bb65', 
+
+  materialRed: '#F44336'
+
 } as const
 
 export const colors = {
@@ -81,4 +86,9 @@ export const colors = {
    *
    */
   errorBackground: palette.angry100,
+
+  green: palette.moneyGreen,
+
+  materialRed: palette.materialRed
+  
 }

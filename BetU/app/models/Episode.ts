@@ -20,11 +20,12 @@ export const EpisodeModel = types
     guid: types.identifier,
     title: "",
     pubDate: "", // Ex: 2022-08-12 21:05:36
-    link: "",
-    author: "",
-    thumbnail: "",
-    description: "",
-    content: "",
+    pool: "", //total money in the pool
+    // link: "",
+    // author: "",
+    // thumbnail: "",
+    // description: "",
+    // content: "",
     enclosure: types.frozen<Enclosure>(),
     categories: types.array(types.string),
   })
