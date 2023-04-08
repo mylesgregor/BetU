@@ -1,0 +1,31 @@
+# Ignore compiled Python files
+*.pyc
+
+# Ignore Django-specific files
+*.log
+*.pot
+*.pyc
+__pycache__/
+local_settings.py
+
+# Ignore media and static files
+media/
+static/
+
+# Ignore database files
+*.sqlite3
+
+# Ignore secret keys and credentials
+*.key
+*.pem
+*.env
+*.env.*
+
+# Ignore dependencies installed via pip
+venv/
+pip-lock.txt
+pipenv.lock
+
+# Manually added ignores
+.expo/
+node_modules/

@@ -62,31 +62,31 @@ def user_detail(request, pk):
         user.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-def handler404(request, exception, template_name="betUniversity/404.html"):
-    response = render(request, template_name)
-    response.status_code = 404
-    return response
+# def handler404(request, exception, template_name="betUniversity/404.html"):
+#     response = render(request, template_name)
+#     response.status_code = 404
+#     return response
 
-def handler500(request, template_name="betUniversity/500.html"):
-    response = render(request, template_name)
-    response.status_code = 500
-    return response
-
-def index(request):
-    return HttpResponse("Hello, world. You're at the betU index (homepage).")
-
-def events(request):
-    page_title = 'Events'
-    url_parameter = request.GET.get("q")
-    return render(request, 'betUniveristy/events.html', events)
-
-def profile(request):
-    page_title = 'Events'
-    url_parameter = request.GET.get("q")
-    return render(request, 'betUniveristy/events.html', profile)
-
-
-
+# def handler500(request, template_name="betUniversity/500.html"):
+#     response = render(request, template_name)
+#     response.status_code = 500
+#     return response
 
 def index(request):
     return HttpResponse("Hello, world. You're at the betU index (homepage).")
+
+# def events(request):
+#     page_title = 'Events'
+#     url_parameter = request.GET.get("q")
+#     return render(request, 'betUniveristy/events.html', events)
+
+# def profile(request):
+#     page_title = 'Events'
+#     url_parameter = request.GET.get("q")
+#     return render(request, 'betUniveristy/events.html', profile)
+
+
+
+
+# def index(request):
+#     return HttpResponse("Hello, world. You're at the betU index (homepage).")
