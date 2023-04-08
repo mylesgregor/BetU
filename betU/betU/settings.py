@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "rest_framework", # adding the rest framework application
+    "betUniversity", # adding the betUniversity application
 ]
 
 MIDDLEWARE = [
@@ -73,12 +75,20 @@ WSGI_APPLICATION = "betU.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+    'default': {
+        
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'BetU_Data',
+        'USER': 'root',
+        'PASSWORD': 'MyNewPass',
+        'HOST': '127.0.0.1',
+        'PORT': '3306',
+        
     }
 }
+
 
 
 # Password validation
@@ -121,3 +131,11 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}
