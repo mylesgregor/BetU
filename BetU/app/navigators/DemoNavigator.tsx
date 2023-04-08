@@ -17,6 +17,7 @@ export type DemoTabParamList = {
   DemoShowroom: { queryIndex?: string; itemIndex?: string }
   DemoDebug: undefined
   DemoPodcastList: undefined
+  DemoNew: undefined
 }
 
 /**
@@ -56,7 +57,7 @@ export function DemoNavigator() {
           ),
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="NewEventScreen"
         component={NewEventScreen}
         options={{
@@ -65,7 +66,7 @@ export function DemoNavigator() {
             <Icon icon="components" color={focused && colors.tint} size={30} />
           ),
         }}
-      />
+      /> */}
 
       {/* <Tab.Screen
         name="DemoCommunity"
@@ -78,16 +79,16 @@ export function DemoNavigator() {
         }}
       /> */}
 
-      {/* <Tab.Screen
-        name="DemoPodcastList"
-        component={DemoPodcastListScreen}
+      <Tab.Screen
+        name="DemoCommunity"
+        component={ViewEventsScreen}
         options={{
           tabBarLabel: translate("demoNavigator.podcastListTab"),
           tabBarIcon: ({ focused }) => (
             <Icon icon="components" color={focused && colors.tint} size={30} />
           ),
         }}
-      /> */}
+      />
 
       {/* <Tab.Screen
         name="DemoDebug"
@@ -100,8 +101,8 @@ export function DemoNavigator() {
         }}
       /> */}
       <Tab.Screen
-        name="eventScreen"
-        component={ViewEventsScreen}
+        name="DemoNew"
+        component={NewEventScreen}
         options={{
           tabBarLabel: translate("demoNavigator.eventScreenTab"),
           tabBarIcon: ({ focused }) => (

@@ -8,40 +8,45 @@ import { openLinkInBrowser } from "../utils/openLinkInBrowser"
 import { isRTL } from "../i18n"
 import DatePicker from 'react-native-date-picker'
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { useState } from "react"
+import React, {FC} from "react"
 import { Platform } from "expo-modules-core"
 
 const chainReactLogo = require("../../assets/images/cr-logo.png")
 const reactNativeLiveLogo = require("../../assets/images/rnl-logo.png")
 const reactNativeRadioLogo = require("../../assets/images/rnr-logo.png")
 const reactNativeNewsletterLogo = require("../../assets/images/rnn-logo.png")
-// const [date, setDate] = useState(new Date())
-// const [open, setOpen] = useState(false)
-const [date, setDate] = useState(new Date(1598051730000));
-  const [mode, setMode] = useState('date');
-  const [show, setShow] = useState(false);
-  const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate;
-    setShow(false);
-    setDate(currentDate);
-  };
-  const showMode = (currentMode) => {
-    if (Platform.OS === 'android') {
-      setShow(false);
-      // for iOS, add a button that closes the picker
-    }
-    setMode(currentMode);
-  };
+// const [date, setDate] = React.useState(new Date())
+// const [open, setOpen] = React.useState(false)
 
-  const showDatepicker = () => {
-    showMode('date');
-  };
-
-  const showTimepicker = () => {
-    showMode('time');
-  };
-export const NewEventScreen: FC<DemoTabScreenProps<"NewEvent">> =
+export const NewEventScreen: FC<DemoTabScreenProps<"DemoNew">> =
   function NewEventScreen(_props) {
+
+
+    const [date, setDate] = React.useState(new Date(1598051730000));
+    const [mode, setMode] = React.useState('date');
+    const [show, setShow] = React.useState(false);
+    const onChange = (event, selectedDate) => {
+      const currentDate = selectedDate;
+      setShow(false);
+      setDate(currentDate);
+    };
+    const showMode = (currentMode) => {
+      if (Platform.OS === 'android') {
+        setShow(false);
+        // for iOS, add a button that closes the picker
+      }
+      setMode(currentMode);
+    };
+  
+    const showDatepicker = () => {
+      showMode('date');
+    };
+  
+    const showTimepicker = () => {
+      showMode('time');
+    };
+
+
     return (
       <Screen preset="scroll" contentContainerStyle={$container} safeAreaEdges={["top"]}>
         <Text preset="heading" tx="newEventScreen.title" style={$title} />
@@ -58,8 +63,8 @@ export const NewEventScreen: FC<DemoTabScreenProps<"NewEvent">> =
 
   
     
-      <Button onPress={showDatepicker} title="Show date picker!" />
-      <Button onPress={showTimepicker} title="Show time picker!" />
+      {/* <Button onPress={showDatepicker} title="Show date picker!" />
+      <Button onPress={showTimepicker} title="Show time picker!" /> */}
       <Text>selected: {date.toLocaleString()}</Text>
       {show && (
         <DateTimePicker
@@ -98,7 +103,7 @@ export const NewEventScreen: FC<DemoTabScreenProps<"NewEvent">> =
           tx="newEventScreen.joinSlackLink"
           leftIcon="slack"
           rightIcon={isRTL ? "caretLeft" : "caretRight"}
-          onPress={() => openLinkInBrowser("https://community.infinite.red/")}
+          // onPress={() => openLinkInBrowser("https://community.infinite.red/")}
         />
         <Text
           preset="subheading"
@@ -110,7 +115,7 @@ export const NewEventScreen: FC<DemoTabScreenProps<"NewEvent">> =
           tx="newEventScreen.contributeToIgniteLink"
           leftIcon="github"
           rightIcon={isRTL ? "caretLeft" : "caretRight"}
-          onPress={() => openLinkInBrowser("https://github.com/infinitered/ignite")}
+          // onPress={() => openLinkInBrowser("https://github.com/infinitered/ignite")}
         />
 
         <Text
@@ -128,7 +133,7 @@ export const NewEventScreen: FC<DemoTabScreenProps<"NewEvent">> =
               <Image source={reactNativeRadioLogo} style={$logo} />
             </View>
           }
-          onPress={() => openLinkInBrowser("https://reactnativeradio.com/")}
+          // onPress={() => openLinkInBrowser("https://reactnativeradio.com/")}
         />
         <ListItem
           tx="newEventScreen.reactNativeNewsletterLink"
@@ -139,7 +144,7 @@ export const NewEventScreen: FC<DemoTabScreenProps<"NewEvent">> =
               <Image source={reactNativeNewsletterLogo} style={$logo} />
             </View>
           }
-          onPress={() => openLinkInBrowser("https://reactnativenewsletter.com/")}
+          // onPress={() => openLinkInBrowser("https://reactnativenewsletter.com/")}
         />
         <ListItem
           tx="newEventScreen.reactNativeLiveLink"
@@ -150,7 +155,7 @@ export const NewEventScreen: FC<DemoTabScreenProps<"NewEvent">> =
               <Image source={reactNativeLiveLogo} style={$logo} />
             </View>
           }
-          onPress={() => openLinkInBrowser("https://rn.live/")}
+          // onPress={() => openLinkInBrowser("https://rn.live/")}
         />
         <ListItem
           tx="newEventScreen.chainReactConferenceLink"
@@ -160,7 +165,7 @@ export const NewEventScreen: FC<DemoTabScreenProps<"NewEvent">> =
               <Image source={chainReactLogo} style={$logo} />
             </View>
           }
-          onPress={() => openLinkInBrowser("https://cr.infinite.red/")}
+          // onPress={() => openLinkInBrowser("https://cr.infinite.red/")}
         />
         <Text preset="subheading" tx="newEventScreen.hireUsTitle" style={$sectionTitle} />
         <Text tx="newEventScreen.hireUs" style={$description} />
@@ -168,7 +173,7 @@ export const NewEventScreen: FC<DemoTabScreenProps<"NewEvent">> =
           tx="demoCommunityScreen.hireUsLink"
           leftIcon="clap"
           rightIcon={isRTL ? "caretLeft" : "caretRight"}
-          onPress={() => openLinkInBrowser("https://infinite.red/contact")}
+          // onPress={() => openLinkInBrowser("https://infinite.red/contact")}
         />
       </Screen>
     )
