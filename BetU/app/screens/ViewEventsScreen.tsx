@@ -101,12 +101,13 @@ export const ViewEventsScreen: FC<DemoTabScreenProps<"DemoPodcastList">> = obser
 
        setData(response.data);
       } catch (error) {
-        console.error('Error fetching data:', error);
+        //console.error('Error fetching data:', error);
+        //Do nothing
       }
     }
 
     fetchData();
-    console.log("TEST", jData[1].name);
+    //console.log("TEST", jData[1].name);
 
     var cards = [];
 
@@ -379,7 +380,8 @@ const EpisodeCard = observer(function EpisodeCard({
         console.log('Response:', response.data);
       })
       .catch(error => {
-        console.error('Error:', error);
+        //console.error('Error:', error);
+        //Do nothing
       });
     }
     runner();

@@ -53,7 +53,8 @@ export const NewEventScreen: FC<DemoTabScreenProps<"DemoNew">> =
         console.log('Response:', response.data);
       })
       .catch(error => {
-        console.error('Error:', error);
+        //console.error('Error:', error);
+        //Do nothing
       });
     }
    

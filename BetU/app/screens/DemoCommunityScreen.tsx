@@ -80,7 +80,8 @@ export const DemoCommunityScreen: FC<DemoTabScreenProps<"DemoPodcastList">> = ob
 
        setData(response.data);
       } catch (error) {
-        console.error('Error fetching data:', error);
+        //('Error fetching data:', error);
+        //Do nothing
       }
     }
 

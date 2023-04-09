@@ -42,7 +42,7 @@ const en = {
     hint: "Hint: you can use any email address and your favorite password :)",
   },
   demoNavigator: {
-    componentsTab: "Components",
+    // componentsTab: "Placed Bets",
     newEventScreenTab: "Create Event",
     // debugTab: "Debug",
     // communityTab: "Community",

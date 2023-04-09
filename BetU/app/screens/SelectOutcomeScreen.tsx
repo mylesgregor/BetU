@@ -91,7 +91,8 @@ export const SelectOutcomeScreen: FC<DemoTabScreenProps<"DemoPodcastList">> = ob
 
      setData(response.data);
     } catch (error) {
-      console.error('Error fetching data:', error);
+      //console.error('Error fetching data:', error);
+      //Do nothing
     }
   }
 
@@ -478,7 +479,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     borderRadius: 4,
     elevation: 3,
-    backgroundColor: '#4CAF50',
+    backgroundColor: '#B2C4A7',
   },
   buttonRed: {
     alignItems: 'center',
@@ -487,7 +488,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     borderRadius: 4,
     elevation: 3,
-    backgroundColor: '#F44336',
+    backgroundColor: '#F7BFBB',
   },
   text: {
     fontSize: 16,
