@@ -1,15 +1,17 @@
 // import React, { FC, useState } from "react"
-import { Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
-import { Button, ListItem, Screen, Text, TextField } from "../components"
+import { Image, ImageStyle, TextStyle, View, ViewStyle , Button as TradButton} from "react-native"
+import { Button, Icon, ListItem, Screen, Text, TextField } from "../components"
 //import {Button} from 'react-native'
 import { DemoTabScreenProps } from "../navigators/DemoNavigator"
 import { spacing } from "../theme"
 import { openLinkInBrowser } from "../utils/openLinkInBrowser"
 import { isRTL } from "../i18n"
-import DatePicker from 'react-native-date-picker'
+import DatePicker from 'react-native-modern-datepicker';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import React, {FC} from "react"
+import React, {FC, } from "react"
+import {Alert, Modal, StyleSheet, Pressable, TextInput} from 'react-native';
 import { Platform } from "expo-modules-core"
+import { DemoUseCase } from "./DemoShowroomScreen/DemoUseCase"
 
 const chainReactLogo = require("../../assets/images/cr-logo.png")
 const reactNativeLiveLogo = require("../../assets/images/rnl-logo.png")
@@ -22,84 +24,110 @@ export const NewEventScreen: FC<DemoTabScreenProps<"DemoNew">> =
   function NewEventScreen(_props) {
 
 
-    const [date, setDate] = React.useState(new Date(1598051730000));
-    const [mode, setMode] = React.useState('date');
-    const [show, setShow] = React.useState(false);
-    const onChange = (event, selectedDate) => {
-      const currentDate = selectedDate;
-      setShow(false);
-      setDate(currentDate);
-    };
-    const showMode = (currentMode) => {
-      if (Platform.OS === 'android') {
-        setShow(false);
-        // for iOS, add a button that closes the picker
-      }
-      setMode(currentMode);
-    };
+    
+    const dateObject = new Date();
   
-    const showDatepicker = () => {
-      showMode('date');
-    };
-  
-    const showTimepicker = () => {
-      showMode('time');
-    };
-
-
+    const [selectedDate, setSelectedDate] = React.useState( dateObject.toLocaleString());
+    const [modalVisible, setModalVisible] = React.useState(false);
+    const $iconStyle: ImageStyle = { width: 30, height: 30 }
+    const [text, onChangeText] = React.useState('');
     return (
+
+      
       <Screen preset="scroll" contentContainerStyle={$container} safeAreaEdges={["top"]}>
-        <Text preset="heading" tx="newEventScreen.title" style={$title} />
-        <Text tx="newEventScreen.tagLine" style={$tagline} />
-
         
-        <TextField
-        label=""
-        value=""
-        placeholder="Lorem Ipsum..."
-        multiline
+        <Text preset="heading" tx="newEventScreen.title" style={$title} />
+        
+        <DemoUseCase
+        name="New Event Name:"
+        description="Set your event name and end Date/Time!">
+        <View
+      style={{
+        
+        borderBottomColor: '#808080',
+        borderWidth: 1,
+        
+      }}>
+        
+
+      
+      <TextInput
+        editable
+        multiline={true}
+        numberOfLines={4}
+        maxLength={40}
+        
+       
+        onChangeText={text => onChangeText(text)}
+        value={text}
+        placeholder={"Event Name..."}
+        style={{padding: 10}}
       />
-
-
-  
-    
-      {/* <Button onPress={showDatepicker} title="Show date picker!" />
-      <Button onPress={showTimepicker} title="Show time picker!" /> */}
-      <Text>selected: {date.toLocaleString()}</Text>
-      {show && (
-        <DateTimePicker
-          testID="dateTimePicker"
-          value={date}
-          mode={mode}
-          is24Hour={true}
-          onChange={onChange}
-        />
-      )}
-    
+       
+    </View>
 
    
-
-  
+   
     
-      {/* <Button title="Open" onPress={() => setOpen(true)} />
-      <DatePicker
-        modal
-        open={open}
-        date={date}
-        onConfirm={(date) => {
-          setOpen(false)
-          setDate(date)
-        }}
-        onCancel={() => {
-          setOpen(false)
-        }}
-      /> */}
+    <View style={styles.centeredView}>
+      <Modal
+        animationType="slide"
+      
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          Alert.alert('Modal has been closed.');
+          setModalVisible(!modalVisible);
+        }}>
+        <View style={styles.centeredView}>
+          
+          <View style={styles.modalView}>
+          <DatePicker
+          //  minimumDate={dateObject.toLocaleDateString()}
+          
+      onSelectedChange={date => setSelectedDate(date)}
+    />
+    
+            
+            <Pressable
+              style={[styles.button, styles.buttonClose]}
+              onPress={() => setModalVisible(!modalVisible)}>
+              <Text style={styles.textStyle}>Select End Date and Time</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "flex-end"
+        }}>
+      
+
+      <Button
+        preset="filled"
+        onPress={() => setModalVisible(true)}
+        RightAccessory={(props) => (
+          <Icon containerStyle={props.style} style={$iconStyle} icon="settings" />
+        )}
+      >
+        {selectedDate}
+      </Button>
+      
+      </View>
+     
+    </View>
+    </DemoUseCase>
+   
+    
+  
+      
     
   
 
        <Button text="Create!!" />
 
-        <ListItem
+        {/* <ListItem
           tx="newEventScreen.joinSlackLink"
           leftIcon="slack"
           rightIcon={isRTL ? "caretLeft" : "caretRight"}
@@ -174,11 +202,57 @@ export const NewEventScreen: FC<DemoTabScreenProps<"DemoNew">> =
           leftIcon="clap"
           rightIcon={isRTL ? "caretLeft" : "caretRight"}
           // onPress={() => openLinkInBrowser("https://infinite.red/contact")}
-        />
+        /> */}
       </Screen>
     )
   }
-
+  const styles = StyleSheet.create({
+    centeredView: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginTop: 22,
+    },
+    modalView: {
+      
+      height: 400,
+      width: 300,
+      margin: .5,
+      backgroundColor: 'white',
+      borderRadius: 10,
+      padding: 10,
+      alignItems: 'center',
+      shadowColor: '#000',
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 1,
+      shadowRadius: 10,
+      elevation: 5,
+      
+    },
+    button: {
+      borderRadius: 20,
+      padding: 10,
+      elevation: 2,
+    },
+    buttonOpen: {
+      backgroundColor: '#F194FF',
+    },
+    buttonClose: {
+      backgroundColor: '#2196F3',
+    },
+    textStyle: {
+      color: 'white',
+      fontWeight: 'bold',
+      textAlign: 'center',
+    },
+    modalText: {
+      marginBottom: 15,
+      textAlign: 'center',
+    },
+  });
 const $container: ViewStyle = {
   paddingTop: spacing.large + spacing.extraLarge,
   paddingHorizontal: spacing.large,

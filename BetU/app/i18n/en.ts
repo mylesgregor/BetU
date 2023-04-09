@@ -43,7 +43,7 @@ const en = {
   },
   demoNavigator: {
     componentsTab: "Components",
-    newEventScreenTab: "New Events",
+    newEventScreenTab: "Create Event",
     // debugTab: "Debug",
     // communityTab: "Community",
     podcastListTab: "Podcast",

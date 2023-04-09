@@ -104,7 +104,7 @@ export function DemoNavigator() {
         name="DemoNew"
         component={NewEventScreen}
         options={{
-          tabBarLabel: translate("demoNavigator.eventScreenTab"),
+          tabBarLabel: translate("demoNavigator.newEventScreenTab"),
           tabBarIcon: ({ focused }) => (
             <Icon icon="components" color={focused && colors.tint} size={30} />
           ),
