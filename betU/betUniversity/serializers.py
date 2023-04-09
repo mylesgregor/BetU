@@ -60,3 +60,6 @@ class BetsSerializer(serializers.Serializer):
         instance.save()
         return instance
  
+class LoginSerializer(serializers.Serializer):
+    user_email = serializers.EmailField()
+    password = serializers.CharField()
