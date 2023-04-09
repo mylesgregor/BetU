@@ -35,6 +35,7 @@ import { DemoTabScreenProps } from "../navigators/DemoNavigator"
 import { colors, spacing } from "../theme"
 import { delay } from "../utils/delay"
 import { openLinkInBrowser } from "../utils/openLinkInBrowser"
+import axios from 'axios'
 
 const ICON_SIZE = 14
 
@@ -66,83 +67,175 @@ export const ViewEventsScreen: FC<DemoTabScreenProps<"DemoPodcastList">> = obser
       await Promise.all([episodeStore.fetchEpisodes(), delay(750)])
       setRefreshing(false)
     }
-    return (
-      <>
 
-      <Screen
-        preset="fixed"
-        safeAreaEdges={["top"]}
-        contentContainerStyle={$screenContentContainer}
-      >     
+   const [jData, setData] = React.useState([{
+        "id": 1,
+        "date": "Apr 16, 2023 3:11 AM",
+        "name": "Bryan can squat 600lbs",
+        "over": 45,
+        "money": 439,
+        "under": 2,
+        "creator": "Tom Davidi"
+      },
+      {
+        "id": 2,
+        "date": "Apr 16, 2023 7:03 AM",
+        "name": "Myles runs a 6 minute mile",
+        "over": 24,
+        "money": 252,
+        "under": 3,
+        "creator": "Ajay Berryann"
+      },
+      {
+        "id": 3,
+        "date": "May 2, 2023 7:19 AM",
+        "name": "Bryan can squat 600lbs",
+        "over": 17,
+        "money": 230,
+        "under": 1,
+        "creator": "Benedetta Peet"
+      }]);
+    async function fetchData() {
+      try {
+        const response = await axios.get('https://retoolapi.dev/7AWtiV/data');
 
-             
-    {/* <Pressable
-      style={[styles.button, styles.buttonOpen]}
-      onPress={() => setModalVisible(true)}>
-      <Text style={styles.textStyle}>Show Modal</Text>
-    </Pressable>  */}
-        <FlatList<Episode>
-          data={episodeStore.episodesForList}
-          extraData={episodeStore.favorites.length + episodeStore.episodes.length}
-          contentContainerStyle={$flatListContentContainer}
-          refreshing={refreshing}
-          onRefresh={manualRefresh}
-          ListEmptyComponent={
-            isLoading ? (
-              <ActivityIndicator />
-            ) : (
-              <EmptyState
-                preset="generic"
-                style={$emptyState}
-                headingTx={
-                  episodeStore.favoritesOnly
-                    ? "viewEventsScreen.noFavoritesEmptyState.heading"
-                    : undefined
-                }
-                contentTx={
-                  episodeStore.favoritesOnly
-                    ? "viewEventsScreen.noFavoritesEmptyState.content"
-                    : undefined
-                }
-                button={episodeStore.favoritesOnly ? null : undefined}
-                buttonOnPress={manualRefresh}
-                imageStyle={$emptyStateImage}
-                ImageProps={{ resizeMode: "contain" }}
-              />
-            )
-          }
-          ListHeaderComponent={
-            <View style={$heading}>
-              <Text preset="heading" tx="viewEventsScreen.title" />
-              {(episodeStore.favoritesOnly || episodeStore.episodesForList.length > 0) && (
-                <View style={$toggle}>
-                  <Toggle
-                    value={episodeStore.favoritesOnly}
-                    onValueChange={() =>
-                      episodeStore.setProp("favoritesOnly", !episodeStore.favoritesOnly)
-                    }
-                    variant="switch"
-                    labelTx="viewEventsScreen.onlyFavorites"
-                    labelPosition="left"
-                    labelStyle={$labelStyle}
-                    accessibilityLabel={translate("viewEventsScreen.accessibility.switch")}
-                  />
+       setData(response.data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    }
+
+    fetchData();
+    console.log("TEST", jData[1].name);
+
+    var cards = [];
+
+    for(let i = 0; i < 3; i++){
+      
+      cards.push(
+        <Card
+              style={$item}
+              verticalAlignment="force-footer-bottom"
+              // onPress={handlePressCard}
+              // onPress={() => setModalVisible(true)}
+              // onLongPress={handlePressFavorite}
+              HeadingComponent={
+                <View style={$metadata}>
+                  <Text
+                    style={$metadataText}
+                    size="xxs"
+                    // accessibilityLabel={episode.datePublished.accessibilityLabel}
+                  >
+                    {jData[i].name}
+                  </Text>
+                  {/* <Text
+                    style={$metadataText}
+                    size="xxs"
+                    // accessibilityLabel={episode.duration.accessibilityLabel}
+                  >
+                    {episode.duration.textLabel}
+                  </Text> */}
                 </View>
-              )}
-            </View>
-          }
-          renderItem={({ item }) => (
-            <EpisodeCard
-              key={item.guid}
-              episode={item}
-              isFavorite={episodeStore.hasFavorite(item)}
-              onPress={() => episodeStore.toggleFavorite(item)}
-              onPressFavorite={() => episodeStore.toggleFavorite(item)}
+              }
+
+              RightComponent={
+              <Text>
+                ${jData[i].money}
+              </Text>
+            }
+        
+              FooterComponent={
+                <View style={$overUnderView}>
+                <Text style={$cardOverText}>{jData[i].over}</Text> 
+                <Text>/</Text>
+                <Text style={$cardUnderText}>{jData[i].under}</Text> 
+                </View>
+              }
             />
-          )}
-        />
-      </Screen>
-      </>
+      )
+    }
+    
+
+
+    return (
+      // <>
+
+      // <Screen
+      //   preset="fixed"
+      //   safeAreaEdges={["top"]}
+      //   contentContainerStyle={$screenContentContainer}
+      // >     
+
+    
+      //   {cards}
+       
+      // </Screen>
+      // </>
+      <Screen
+      preset="fixed"
+      safeAreaEdges={["top"]}
+      contentContainerStyle={$screenContentContainer}
+    >
+      <FlatList<any>
+        data={jData}
+        extraData={episodeStore.favorites.length + episodeStore.episodes.length}
+        contentContainerStyle={$flatListContentContainer}
+        refreshing={refreshing}
+        onRefresh={manualRefresh}
+        ListEmptyComponent={
+          isLoading ? (
+            <ActivityIndicator />
+          ) : (
+            <EmptyState
+              preset="generic"
+              style={$emptyState}
+              headingTx={
+                episodeStore.favoritesOnly
+                  ? "viewEventsScreen.noFavoritesEmptyState.heading"
+                  : undefined
+              }
+              contentTx={
+                episodeStore.favoritesOnly
+                  ? "viewEventsScreen.noFavoritesEmptyState.content"
+                  : undefined
+              }
+              button={episodeStore.favoritesOnly ? null : undefined}
+              buttonOnPress={manualRefresh}
+              imageStyle={$emptyStateImage}
+              ImageProps={{ resizeMode: "contain" }}
+            />
+          )
+        }
+        ListHeaderComponent={
+          <View style={$heading}>
+            <Text preset="heading" tx="viewEventsScreen.title" />
+            {(episodeStore.favoritesOnly || episodeStore.episodesForList.length > 0) && (
+              <View style={$toggle}>
+                <Toggle
+                  value={episodeStore.favoritesOnly}
+                  onValueChange={() =>
+                    episodeStore.setProp("favoritesOnly", !episodeStore.favoritesOnly)
+                  }
+                  variant="switch"
+                  labelTx="viewEventsScreen.onlyFavorites"
+                  labelPosition="left"
+                  labelStyle={$labelStyle}
+                  accessibilityLabel={translate("viewEventsScreen.accessibility.switch")}
+                />
+              </View>
+            )}
+          </View>
+        }
+        renderItem={({ item }) => (
+          <EpisodeCard
+            key={item.guid}
+            episode={item}
+            isFavorite={episodeStore.hasFavorite(item)}
+            onPressFavorite={() => episodeStore.toggleFavorite(item)}
+          />
+        )}
+      />
+    </Screen>
     )
   },
 )
@@ -281,13 +374,15 @@ const EpisodeCard = observer(function EpisodeCard({
       <View style={styles.centeredView}>
        <View style={styles.modalView}>
       <Text style={styles.title}>Place a Bet</Text>
+      <View style={$overUnderView}>
+        <Text>$</Text>
       <TextInput
-        style={styles.input}
         onChangeText={onChangeNumber}
         value={number}
         placeholder="useless placeholder"
-        keyboardType="numeric"
+        keyboardType="phone-pad"
       />
+      </View>
       <Text style={styles.value}>{`$${moneyValue.toFixed(2)}`}</Text>
       <View style={styles.switchContainer}>
 
@@ -328,31 +423,31 @@ const EpisodeCard = observer(function EpisodeCard({
             size="xxs"
             // accessibilityLabel={episode.datePublished.accessibilityLabel}
           >
-            {episode.datePublished.textLabel}
+            {episode.date}
           </Text>
           {/* <Text
             style={$metadataText}
             size="xxs"
             // accessibilityLabel={episode.duration.accessibilityLabel}
           >
-            {episode.duration.textLabel}
+            {episode.name}
           </Text> */}
         </View>
       }
-      content={`${episode.parsedTitleAndSubtitle.title} - ${episode.parsedTitleAndSubtitle.subtitle}`}
-      {...accessibilityHintProps}
+      content={`${episode.name}`}
+      // {...accessibilityHintProps}
       RightComponent={
       // <Image source={imageUri} style={$itemThumbnail} />
       <Text>
-        $$$
+        ${episode.money}
       </Text>
     }
 
       FooterComponent={
         <View style={$overUnderView}>
-        <Text style={$cardOverText}>50</Text> 
+        <Text style={$cardOverText}>{episode.over}</Text> 
         <Text>/</Text>
-        <Text style={$cardUnderText}>10</Text> 
+        <Text style={$cardUnderText}>{episode.under}</Text> 
         </View>
         // <Button
         //   onPress={handlePressFavorite}
