@@ -55,7 +55,7 @@ const config = {
           path: "showroom/:queryIndex?/:itemIndex?",
         },
         DemoDebug: "debug",
-        DemoPodcastList: "podcast",
+        DemoPodcastList: "Bets",
         DemoCommunity: "community",
       },
     },

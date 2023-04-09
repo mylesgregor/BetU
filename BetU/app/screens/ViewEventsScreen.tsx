@@ -2,6 +2,8 @@
 // https://ignitecookbook.com/docs/recipes/MigratingToFlashList
 import { observer } from "mobx-react-lite"
 import React, { FC, useEffect, useMemo } from "react"
+// import Slider from 'react-native-slider';
+import Switch from 'react-native-switch'; 
 import {
   AccessibilityProps,
   ActivityIndicator,
@@ -13,6 +15,10 @@ import {
   TextStyle,
   View,
   ViewStyle,
+  Modal,
+  Alert,
+  Pressable,
+  TextInput
 } from "react-native"
 import Animated, {
   Extrapolate,
@@ -37,7 +43,8 @@ const rnrImage2 = require("../../assets/images/rnr-image-2.png")
 const rnrImage3 = require("../../assets/images/rnr-image-3.png")
 const rnrImages = [rnrImage1, rnrImage2, rnrImage3]
 
-export const ViewEventsScreen: FC<DemoTabScreenProps<"EventsList">> = observer(
+
+export const ViewEventsScreen: FC<DemoTabScreenProps<"DemoPodcastList">> = observer(
   function ViewEventsScreen(_props) {
     const { episodeStore } = useStores()
 
@@ -59,13 +66,21 @@ export const ViewEventsScreen: FC<DemoTabScreenProps<"EventsList">> = observer(
       await Promise.all([episodeStore.fetchEpisodes(), delay(750)])
       setRefreshing(false)
     }
-
     return (
+      <>
+
       <Screen
         preset="fixed"
         safeAreaEdges={["top"]}
         contentContainerStyle={$screenContentContainer}
-      >
+      >     
+
+             
+    {/* <Pressable
+      style={[styles.button, styles.buttonOpen]}
+      onPress={() => setModalVisible(true)}>
+      <Text style={styles.textStyle}>Show Modal</Text>
+    </Pressable>  */}
         <FlatList<Episode>
           data={episodeStore.episodesForList}
           extraData={episodeStore.favorites.length + episodeStore.episodes.length}
@@ -121,11 +136,13 @@ export const ViewEventsScreen: FC<DemoTabScreenProps<"EventsList">> = observer(
               key={item.guid}
               episode={item}
               isFavorite={episodeStore.hasFavorite(item)}
+              onPress={() => episodeStore.toggleFavorite(item)}
               onPressFavorite={() => episodeStore.toggleFavorite(item)}
             />
           )}
         />
       </Screen>
+      </>
     )
   },
 )
@@ -134,10 +151,12 @@ const EpisodeCard = observer(function EpisodeCard({
   episode,
   isFavorite,
   onPressFavorite,
+  onPress,
 }: {
   episode: Episode
   onPressFavorite: () => void
   isFavorite: boolean
+  onPress: () => void
 }) {
   const liked = useSharedValue(isFavorite ? 1 : 0)
 
@@ -235,13 +254,73 @@ const EpisodeCard = observer(function EpisodeCard({
   //     },
   //   [],
   // )
+  const [modalVisible, setModalVisible] = React.useState(false);
+  const [moneyValue, setMoneyValue] = React.useState(0);
+  const [toggle, setToggle] = React.useState(false);
 
+  const handleSliderChange = (value) => {
+    setMoneyValue(value);
+  };
+
+  const handleToggleChange = (value) => {
+    setToggle(value);
+  };
+
+  const [text, onChangeText] = React.useState('Useless Text');
+  const [number, onChangeNumber] = React.useState('');
   return (
+    <>
+    <Modal
+      animationType="slide"
+      transparent={true}
+      visible={modalVisible}
+      onRequestClose={() => {
+        Alert.alert('Modal has been closed.');
+        setModalVisible(!modalVisible);
+      }}>
+      <View style={styles.centeredView}>
+       <View style={styles.modalView}>
+      <Text style={styles.title}>Place a Bet</Text>
+      <TextInput
+        style={styles.input}
+        onChangeText={onChangeNumber}
+        value={number}
+        placeholder="useless placeholder"
+        keyboardType="numeric"
+      />
+      <Text style={styles.value}>{`$${moneyValue.toFixed(2)}`}</Text>
+      <View style={styles.switchContainer}>
+
+      <View >
+                  <Toggle
+                    value={toggle}
+                    onValueChange={() =>
+                      handleToggleChange(!toggle)
+                    }
+                    variant="switch"
+                    labelTx="viewEventsScreen.onlyFavorites"
+                    labelPosition="left"
+                    // labelStyle={$labelStyle}
+                    // accessibilityLabel={translate("viewEventsScreen.accessibility.switch")}
+                  />
+                </View>
+                
+      </View>
+      <Pressable
+            style={[styles.button, styles.buttonClose]}
+            onPress={() => setModalVisible(!modalVisible)}>
+            <Text style={styles.textStyle}>Hide Modal</Text>
+          </Pressable>
+    </View>
+    
+    </View>
+    </Modal>
     <Card
       style={$item}
       verticalAlignment="force-footer-bottom"
-      onPress={handlePressCard}
-      onLongPress={handlePressFavorite}
+      // onPress={handlePressCard}
+      onPress={() => setModalVisible(true)}
+      // onLongPress={handlePressFavorite}
       HeadingComponent={
         <View style={$metadata}>
           <Text
@@ -299,6 +378,7 @@ const EpisodeCard = observer(function EpisodeCard({
         // </Button>
       }
     />
+    </>
   )
 })
 
@@ -398,6 +478,81 @@ const $emptyState: ViewStyle = {
 const $emptyStateImage: ImageStyle = {
   transform: [{ scaleX: isRTL ? -1 : 1 }],
 }
+
+const styles = StyleSheet.create({
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 35,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  button: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+  },
+  buttonOpen: {
+    backgroundColor: '#F194FF',
+  },
+  buttonClose: {
+    backgroundColor: '#2196F3',
+  },
+  textStyle: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: 'center',
+  },
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 16,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 16,
+  },
+  slider: {
+    width: '100%',
+    marginBottom: 16,
+  },
+  value: {
+    fontSize: 18,
+    marginBottom: 16,
+  },
+  switchContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  switchLabel: {
+    fontSize: 18,
+    marginRight: 8,
+  },
+});
+
+
+
+
 // #endregion
 
 // @demo remove-file

@@ -46,7 +46,7 @@ const en = {
     newEventScreenTab: "New Events",
     // debugTab: "Debug",
     // communityTab: "Community",
-    podcastListTab: "Podcast",
+    podcastListTab: "Bets",
     eventScreenTab: "Events"
   },
   demoCommunityScreen: {

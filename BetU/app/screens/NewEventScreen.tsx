@@ -6,8 +6,8 @@ import { DemoTabScreenProps } from "../navigators/DemoNavigator"
 import { spacing } from "../theme"
 import { openLinkInBrowser } from "../utils/openLinkInBrowser"
 import { isRTL } from "../i18n"
-import DatePicker from 'react-native-date-picker'
-import DateTimePicker from '@react-native-community/datetimepicker';
+// import DatePicker from 'react-native-date-picker'
+// import DateTimePicker from '@react-native-community/datetimepicker';
 import React, {FC} from "react"
 import { Platform } from "expo-modules-core"
 
@@ -65,16 +65,16 @@ export const NewEventScreen: FC<DemoTabScreenProps<"DemoNew">> =
     
       {/* <Button onPress={showDatepicker} title="Show date picker!" />
       <Button onPress={showTimepicker} title="Show time picker!" /> */}
-      <Text>selected: {date.toLocaleString()}</Text>
+      {/* <Text>selected: {date.toLocaleString()}</Text>
       {show && (
-        <DateTimePicker
-          testID="dateTimePicker"
-          value={date}
-          mode={mode}
-          is24Hour={true}
-          onChange={onChange}
-        />
-      )}
+        // <DateTimePicker
+        //   testID="dateTimePicker"
+        //   value={date}
+        //   mode={mode}
+        //   is24Hour={true}
+        //   onChange={onChange}
+        // />
+      )} */}
     
 
    
