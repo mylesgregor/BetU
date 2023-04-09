@@ -87,7 +87,7 @@ export const SelectOutcomeScreen: FC<DemoTabScreenProps<"DemoPodcastList">> = ob
 ]);
   async function fetchData() {
     try {
-      const response = await axios.get('https://retoolapi.dev/awUUMv/data?creator=Fawne%20Lauks');
+      const response = await axios.get('https://retoolapi.dev/2xpW1A/data?creator=Fawne%20Lauks');
 
      setData(response.data);
     } catch (error) {
@@ -278,7 +278,7 @@ const EpisodeCard = observer(function EpisodeCard({
   
   // async function fetchData() {
   //   try {
-  //     const response = await axios.get('https://retoolapi.dev/awUUMv/data?creator=Fawne%20Lauks');
+  //     const response = await axios.get('https://retoolapi.dev/2xpW1A/data?creator=Fawne%20Lauks');
   //     console.log(response.data);
   //   } catch (error) {
   //     console.error('Error fetching data:', error);

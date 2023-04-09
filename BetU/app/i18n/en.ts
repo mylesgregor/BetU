@@ -42,7 +42,7 @@ const en = {
     hint: "Hint: you can use any email address and your favorite password :)",
   },
   demoNavigator: {
-    // componentsTab: "Placed Bets",
+    componentsTab: "Placed Bets",
     newEventScreenTab: "Create Event",
     // debugTab: "Debug",
     // communityTab: "Community",
@@ -126,7 +126,7 @@ const en = {
   // },
   demoPodcastListScreen: {
     title: "React Native Radio episodes",
-    onlyFavorites: "Show Active Bets ",
+    // onlyFavorites: "Show Active Bets ",
     favoriteButton: "Favorite",
     unfavoriteButton: "Unfavorite",
     accessibility: {

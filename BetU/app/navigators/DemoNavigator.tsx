@@ -49,7 +49,7 @@ export function DemoNavigator() {
         tabBarItemStyle: $tabBarItem,
       }}
     >
-      {/* <Tab.Screen
+      <Tab.Screen
         name="Demo"
         component={DemoCommunityScreen}
         options={{
@@ -58,7 +58,7 @@ export function DemoNavigator() {
             <Icon icon="view" color={focused && colors.tint} size={30} />
           ),
         }}
-      /> */}
+      />
       {/* <Tab.Screen
         name="NewEventScreen"
         component={NewEventScreen}

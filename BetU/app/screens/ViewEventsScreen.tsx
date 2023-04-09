@@ -97,7 +97,7 @@ export const ViewEventsScreen: FC<DemoTabScreenProps<"DemoPodcastList">> = obser
       }]);
     async function fetchData() {
       try {
-        const response = await axios.get('https://retoolapi.dev/awUUMv/data');
+        const response = await axios.get('https://retoolapi.dev/2xpW1A/data');
 
        setData(response.data);
       } catch (error) {
@@ -212,17 +212,7 @@ export const ViewEventsScreen: FC<DemoTabScreenProps<"DemoPodcastList">> = obser
             <Text preset="heading" tx="viewEventsScreen.title" />
             {(episodeStore.favoritesOnly || episodeStore.episodesForList.length > 0) && (
               <View style={$toggle}>
-                <Toggle
-                  value={episodeStore.favoritesOnly}
-                  onValueChange={() =>
-                    episodeStore.setProp("favoritesOnly", !episodeStore.favoritesOnly)
-                  }
-                  variant="switch"
-                  labelTx="viewEventsScreen.onlyFavorites"
-                  labelPosition="left"
-                  labelStyle={$labelStyle}
-                  accessibilityLabel={translate("viewEventsScreen.accessibility.switch")}
-                />
+                
               </View>
             )}
           </View>
@@ -375,7 +365,7 @@ const EpisodeCard = observer(function EpisodeCard({
         "win": "",
       };
       
-      axios.post('https://retoolapi.dev/HS2pI0/newdata', data)
+      axios.post('https://retoolapi.dev/GCbmva/newdata', data)
       .then(response => {
         console.log('Response:', response.data);
       })
