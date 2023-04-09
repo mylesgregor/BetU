@@ -8,9 +8,11 @@ import { translate } from "../i18n"
 import { DemoCommunityScreen, DemoShowroomScreen, DemoDebugScreen } from "../screens"
 import { DemoPodcastListScreen } from "../screens/DemoPodcastListScreen"
 import { ViewEventsScreen } from "../screens/ViewEventsScreen"
+
 import { NewEventScreen } from "../screens/NewEventScreen"
 import { colors, spacing, typography } from "../theme"
 import { AppStackParamList, AppStackScreenProps } from "./AppNavigator"
+import { SelectOutcomeScreen } from "app/screens/SelectOutcomeScreen"
 
 export type DemoTabParamList = {
   DemoCommunity: undefined
@@ -104,7 +106,21 @@ export function DemoNavigator() {
         name="DemoNew"
         component={NewEventScreen}
         options={{
-          tabBarLabel: translate("demoNavigator.eventScreenTab"),
+          tabBarLabel: translate("demoNavigator.newEventScreenTab"),
+          tabBarIcon: ({ focused }) => (
+            <Icon icon="components" color={focused && colors.tint} size={30} />
+          ),
+        }}
+
+
+      />
+
+
+      <Tab.Screen
+        name="DemoSelect"
+        component={SelectOutcomeScreen}
+        options={{
+          tabBarLabel: translate("demoNavigator.selectOutcomeTab"),
           tabBarIcon: ({ focused }) => (
             <Icon icon="components" color={focused && colors.tint} size={30} />
           ),
