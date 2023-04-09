@@ -20,20 +20,20 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
-from betUniversity.models import User, Events, Bets
-from betUniversity.serializers import UserSerializer, EventsSerializer, BetsSerializer
+from betUniversity.models import Users, Event, Bet
+from betUniversity.serializers import UsersSerializer, EventSerializer, BetSerializer
 
 
 
 @api_view(['GET', 'POST'])
 def user_list(request):
     if request.method == 'GET':
-        users = User.objects.all()
-        serializer = UserSerializer(users, many=True)
+        users = Users.objects.all()
+        serializer = UsersSerializer(users, many=True)
         return Response(serializer.data)
     
     elif request.method == 'POST':
-        serializer = UserSerializer(data=request.data)
+        serializer = UsersSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -50,11 +50,11 @@ def user_detail(request, pk):
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'GET':
-        serializer = UserSerializer(user)
+        serializer = UsersSerializer(user)
         return Response(serializer.data)
 
     elif request.method == 'PUT':
-        serializer = UserSerializer(user, data=request.data)
+        serializer = UsersSerializer(user, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
@@ -67,12 +67,12 @@ def user_detail(request, pk):
 @api_view(['GET', 'PUT'])
 def event_list(request):
     if request.method == 'GET':
-        events = Events.objects.all()
-        serializer = EventsSerializer(events, many=True)
+        events = Event.objects.all()
+        serializer = EventSerializer(events, many=True)
         return Response(serializer.data)
     
     elif request.method == 'POST':
-        serializer = EventsSerializer(data=request.data)
+        serializer = EventSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -84,16 +84,16 @@ def event_detail(request, pk):
     Retrieve, update or delete a code snippet.
     """
     try:
-        event = Events.objects.get(pk=pk)
-    except Events.DoesNotExist:
+        event = Event.objects.get(pk=pk)
+    except Event.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'GET':
-        serializer = EventsSerializer(event)
+        serializer = EventSerializer(event)
         return Response(serializer.data)
 
     elif request.method == 'PUT':
-        serializer = EventsSerializer(event, data=request.data)
+        serializer = EventSerializer(event, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)

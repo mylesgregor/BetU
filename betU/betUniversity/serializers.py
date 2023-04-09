@@ -1,7 +1,7 @@
 from rest_framework import serializers
-from betUniversity.models import User, Events, Bets
+from betUniversity.models import Users, Event, Bet
 
-class UserSerializer(serializers.Serializer):
+class UsersSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only="True")
     first_name = serializers.CharField(max_length=250)
     last_name = serializers.CharField(max_length=250)
@@ -12,7 +12,7 @@ class UserSerializer(serializers.Serializer):
 
     def create(self, validated_data):
 
-        return User.objects.create(**validated_data)
+        return Users.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
         instance.first_name = validated_data.get('first_name', instance.first_name)
@@ -24,7 +24,7 @@ class UserSerializer(serializers.Serializer):
         instance.save()
         return instance
         
-class EventsSerializer(serializers.Serializer):
+class EventSerializer(serializers.Serializer):
     event_name = serializers.CharField(max_length = 250)
     event_deadline = serializers.DateTimeField()
     over_title = serializers.CharField(max_length=30) # The title of the over bet (e.g. win, yes, over)
@@ -34,7 +34,7 @@ class EventsSerializer(serializers.Serializer):
 
     def create(self, validated_data):
 
-        return Events.objects.create(**validated_data)
+        return Event.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
         instance.event_name = validated_data.get('event_name', instance.first_name)
@@ -46,13 +46,13 @@ class EventsSerializer(serializers.Serializer):
         instance.save()
         return instance
 
-class BetsSerializer(serializers.Serializer):
+class BetSerializer(serializers.Serializer):
     amount = serializers.IntegerField()
     bet = serializers.BooleanField()
 
     def create(self, validated_data):
 
-        return Bets.objects.create(**validated_data)
+        return Bet.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
         instance.amount = validated_data.get('amount', instance.amount)
