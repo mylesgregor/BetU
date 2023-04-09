@@ -50,12 +50,12 @@ export function DemoNavigator() {
       }}
     >
       <Tab.Screen
-        name="DemoShowroom"
-        component={DemoShowroomScreen}
+        name="Demo"
+        component={DemoCommunityScreen}
         options={{
           tabBarLabel: translate("demoNavigator.componentsTab"),
           tabBarIcon: ({ focused }) => (
-            <Icon icon="components" color={focused && colors.tint} size={30} />
+            <Icon icon="view" color={focused && colors.tint} size={30} />
           ),
         }}
       />
@@ -108,7 +108,7 @@ export function DemoNavigator() {
         options={{
           tabBarLabel: translate("demoNavigator.newEventScreenTab"),
           tabBarIcon: ({ focused }) => (
-            <Icon icon="components" color={focused && colors.tint} size={30} />
+            <Icon icon="community" color={focused && colors.tint} size={30} />
           ),
         }}
 
@@ -122,7 +122,7 @@ export function DemoNavigator() {
         options={{
           tabBarLabel: translate("demoNavigator.selectOutcomeTab"),
           tabBarIcon: ({ focused }) => (
-            <Icon icon="components" color={focused && colors.tint} size={30} />
+            <Icon icon="check" color={focused && colors.tint} size={30} />
           ),
         }}
       />

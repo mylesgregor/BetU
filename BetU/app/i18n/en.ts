@@ -48,7 +48,7 @@ const en = {
     // communityTab: "Community",
     podcastListTab: "Bets",
     eventScreenTab: "Events",
-    selectOutcomeTab: "Select Outcome"
+    selectOutcomeTab: "Decisions"
   },
   demoCommunityScreen: {
     title: "Connect with the community",
@@ -147,6 +147,27 @@ const en = {
   },
   viewEventsScreen: {
     title: "Welcome to BetU",
+    onlyFavorites: "Show Active Bets",
+    favoriteButton: "Favorite",
+    unfavoriteButton: "Unfavorite",
+    accessibility: {
+      cardHint:
+        "Double tap to listen to the episode. Double tap and hold to {{action}} this episode.",
+      switch: "Switch on to only show favorites",
+      favoriteAction: "Toggle Favorite",
+      favoriteIcon: "Episode not favorited",
+      unfavoriteIcon: "Episode favorited",
+      publishLabel: "Published {{date}}",
+      durationLabel: "Duration: {{hours}} hours {{minutes}} minutes {{seconds}} seconds",
+    },
+    noFavoritesEmptyState: {
+      heading: "This looks a bit empty",
+      content:
+        "No favorites have been added yet. Tap the heart on an episode to add it to your favorites!",
+    },
+  },
+  demo: {
+    title: "Placed Bets",
     onlyFavorites: "Show Active Bets",
     favoriteButton: "Favorite",
     unfavoriteButton: "Unfavorite",

@@ -12,6 +12,7 @@ import React, {FC, } from "react"
 import {Alert, Modal, StyleSheet, Pressable, TextInput} from 'react-native';
 import { Platform } from "expo-modules-core"
 import { DemoUseCase } from "./DemoShowroomScreen/DemoUseCase"
+import axios from "axios"
 
 const chainReactLogo = require("../../assets/images/cr-logo.png")
 const reactNativeLiveLogo = require("../../assets/images/rnl-logo.png")
@@ -31,6 +32,34 @@ export const NewEventScreen: FC<DemoTabScreenProps<"DemoNew">> =
     const [modalVisible, setModalVisible] = React.useState(false);
     const $iconStyle: ImageStyle = { width: 30, height: 30 }
     const [text, onChangeText] = React.useState('');
+    const [idGen, setidGen] = React.useState(15);
+
+  
+    
+    function runner(){
+      setidGen(idGen + 1);
+      const data = {
+        "id": idGen,
+        "date": selectedDate,
+        "name": text,
+        "over": 0,
+        "money": 0,
+        "under": 0,
+        "creator": "Fawne Lauks"
+      };
+      
+      axios.post('https://retoolapi.dev/awUUMv/data', data)
+      .then(response => {
+        console.log('Response:', response.data);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+    }
+   
+
+
+
     return (
 
       
@@ -125,7 +154,7 @@ export const NewEventScreen: FC<DemoTabScreenProps<"DemoNew">> =
     
   
 
-       <Button text="Create!!" />
+       <Button text="Create!!" onPress={runner}/>
 
         {/* <ListItem
           tx="newEventScreen.joinSlackLink"

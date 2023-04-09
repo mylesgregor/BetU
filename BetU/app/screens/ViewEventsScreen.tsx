@@ -27,7 +27,7 @@ import Animated, {
   useSharedValue,
   withSpring,
 } from "react-native-reanimated"
-import { Button, Card, EmptyState, Icon, Screen, Text, Toggle } from "../components"
+import { Button, Card, EmptyState, Icon, Screen, Text, Toggle, ToggleProps } from "../components"
 import { isRTL, translate } from "../i18n"
 import { useStores } from "../models"
 import { Episode } from "../models/Episode"
@@ -97,7 +97,7 @@ export const ViewEventsScreen: FC<DemoTabScreenProps<"DemoPodcastList">> = obser
       }]);
     async function fetchData() {
       try {
-        const response = await axios.get('https://retoolapi.dev/7AWtiV/data');
+        const response = await axios.get('https://retoolapi.dev/awUUMv/data');
 
        setData(response.data);
       } catch (error) {
@@ -360,7 +360,32 @@ const EpisodeCard = observer(function EpisodeCard({
   };
 
   const [text, onChangeText] = React.useState('Useless Text');
-  const [number, onChangeNumber] = React.useState('');
+  const [number, onChangeNumber] = React.useState("10");
+  const [idGen, setidGen] = React.useState(15);
+ 
+
+  function placeBet(b:any, a:any){
+    function runner(){
+      setidGen(idGen + 1);
+      const data = {
+        "id": idGen,
+        "betname": a,
+        "money": parseInt(number),
+        "win": "",
+      };
+      
+      axios.post('https://retoolapi.dev/HS2pI0/newdata', data)
+      .then(response => {
+        console.log('Response:', response.data);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+    }
+    runner();
+    setModalVisible(!modalVisible);
+
+  }
   return (
     <>
     <Modal
@@ -379,33 +404,46 @@ const EpisodeCard = observer(function EpisodeCard({
       <TextInput
         onChangeText={onChangeNumber}
         value={number}
-        placeholder="useless placeholder"
+        placeholder="Enter Your Number"
         keyboardType="phone-pad"
+        style={styles.value}
       />
       </View>
-      <Text style={styles.value}>{`$${moneyValue.toFixed(2)}`}</Text>
+      {/* <Text style={styles.value}>{`$${moneyValue.toFixed(2)}`}</Text> */}
       <View style={styles.switchContainer}>
 
-      <View >
-                  <Toggle
-                    value={toggle}
-                    onValueChange={() =>
-                      handleToggleChange(!toggle)
-                    }
-                    variant="switch"
-                    labelTx="viewEventsScreen.onlyFavorites"
-                    labelPosition="left"
-                    // labelStyle={$labelStyle}
-                    // accessibilityLabel={translate("viewEventsScreen.accessibility.switch")}
-                  />
+      <View style={styles.container23}>
+      <View style={$overUnderView}>
+          {/* <TouchableOpacity > */}
+          <Pressable  style={styles.buttonGreen}   onPress={() => console.log('Button pressed!')}>
+            <Text style={styles.text}>Yes</Text>
+          </Pressable>
+          {/* </TouchableOpacity> */}
+        
+        <Text>
+        {"\u00A0"}
+        </Text>
+        
+        <Pressable style={styles.buttonRed}  onPress={() => console.log('Button pressed!')}>
+            <Text style={styles.text}>No</Text>
+          </Pressable>
+          
+        </View>
                 </View>
                 
       </View>
+      <View style={$overUnderView}>
       <Pressable
             style={[styles.button, styles.buttonClose]}
             onPress={() => setModalVisible(!modalVisible)}>
-            <Text style={styles.textStyle}>Hide Modal</Text>
+            <Text style={styles.textStyle}>Cancel</Text>
           </Pressable>
+          <Pressable
+            style={[styles.button, styles.buttonClose]}
+            onPress={() => placeBet(!modalVisible, episode.name)}>
+            <Text style={styles.textStyle}>Place Bet</Text>
+          </Pressable>
+          </View>
     </View>
     
     </View>
@@ -491,6 +529,7 @@ const $flatListContentContainer: ViewStyle = {
 const $heading: ViewStyle = {
   marginBottom: spacing.medium,
 }
+
 
 const $item: ViewStyle = {
   padding: spacing.medium,
@@ -597,9 +636,15 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   button: {
+    paddingBottom: 15,
     borderRadius: 20,
     padding: 10,
     elevation: 2,
+    margin: 10
+    // paddingEnd: 10
+  },
+  container23: {
+    margin: 10,
   },
   buttonOpen: {
     backgroundColor: '#F194FF',
@@ -615,6 +660,23 @@ const styles = StyleSheet.create({
   modalText: {
     marginBottom: 15,
     textAlign: 'center',
+  },  buttonGreen: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 16,
+    paddingHorizontal: 10,
+    borderRadius: 4,
+    elevation: 3,
+    backgroundColor: '#4CAF50',
+  },
+  buttonRed: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 16,
+    paddingHorizontal: 10,
+    borderRadius: 4,
+    elevation: 3,
+    backgroundColor: '#F44336',
   },
   container: {
     flex: 1,
@@ -642,6 +704,12 @@ const styles = StyleSheet.create({
   switchLabel: {
     fontSize: 18,
     marginRight: 8,
+  },  text: {
+    fontSize: 16,
+    lineHeight: 21,
+    fontWeight: 'bold',
+    letterSpacing: 0.25,
+    color: 'white',
   },
 });
 

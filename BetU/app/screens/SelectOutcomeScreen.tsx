@@ -35,6 +35,8 @@ import { DemoTabScreenProps } from "../navigators/DemoNavigator"
 import { colors, spacing } from "../theme"
 import { delay } from "../utils/delay"
 import { openLinkInBrowser } from "../utils/openLinkInBrowser"
+import { check } from "prettier"
+import { string } from "mobx-state-tree/dist/internal"
 
 const ICON_SIZE = 14
 
@@ -49,7 +51,7 @@ type Movie = {
   releaseYear: string;
 };
 
-export const SelectOutcomeScreen: FC<DemoTabScreenProps<"EventsList">> = observer(
+export const SelectOutcomeScreen: FC<DemoTabScreenProps<"DemoPodcastList">> = observer(
   
   function SelectOutcomeScreen(_props) {
 
@@ -73,6 +75,27 @@ export const SelectOutcomeScreen: FC<DemoTabScreenProps<"EventsList">> = observe
       await Promise.all([episodeStore.fetchEpisodes(), delay(750)])
       setRefreshing(false)
     }
+    const [jData, setData] = React.useState([{
+      "id": 1,
+      "date": "Apr 16, 2023 3:11 AM",
+      "name": "Bryan can squat 600lbs",
+      "over": 45,
+      "money": 439,
+      "under": 2,
+      "creator": "Tom Davidi"
+    },
+]);
+  async function fetchData() {
+    try {
+      const response = await axios.get('https://retoolapi.dev/awUUMv/data?creator=Fawne%20Lauks');
+
+     setData(response.data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  }
+
+  fetchData();
 
     return (
       <Screen
@@ -80,8 +103,8 @@ export const SelectOutcomeScreen: FC<DemoTabScreenProps<"EventsList">> = observe
         safeAreaEdges={["top"]}
         contentContainerStyle={$screenContentContainer}
       >
-        <FlatList<Episode>
-          data={episodeStore.episodesForList}
+        <FlatList<any>
+          data={jData}
           extraData={episodeStore.favorites.length + episodeStore.episodes.length}
           contentContainerStyle={$flatListContentContainer}
           refreshing={refreshing}
@@ -220,7 +243,7 @@ const EpisodeCard = observer(function EpisodeCard({
   }
 
   const handlePressCard = () => {
-    openLinkInBrowser(episode.enclosure.link)
+    // openLinkInBrowser(episode.enclosure.link)
   }
 
   // const ButtonLeftAccessory = useMemo(
@@ -252,16 +275,16 @@ const EpisodeCard = observer(function EpisodeCard({
   const title = 'Save';
   const [temp, setTemp] = React.useState('')
   
-  async function fetchData() {
-    try {
-      const response = await axios.get('https://retoolapi.dev/RBgEer/data');
-      console.log(response.data);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
-  }
+  // async function fetchData() {
+  //   try {
+  //     const response = await axios.get('https://retoolapi.dev/awUUMv/data?creator=Fawne%20Lauks');
+  //     console.log(response.data);
+  //   } catch (error) {
+  //     console.error('Error fetching data:', error);
+  //   }
+  // }
   
-  fetchData();
+  // fetchData();
   // var getMoviesFromApiAsync = async () => {
   //   try {
   //     const response = await fetch(
@@ -278,6 +301,26 @@ const EpisodeCard = observer(function EpisodeCard({
   // };
   // getMoviesFromApiAsync();
 
+  function checkDate(date: any){
+    // Create a new Date object for the current date
+    const currentDate = new Date();
+
+    // Create a new Date object for the specific date to compare to
+    const specificDate = new Date(date);
+    console.log(date)
+    console.log(currentDate.getTime(), specificDate.getTime())
+
+    // Compare the timestamps of the two dates
+    if (currentDate.getTime() > specificDate.getTime()) {
+        return false;
+    } else if (currentDate.getTime() < specificDate.getTime()) {
+      return true;
+    } else {
+      return false;
+    }
+
+  }
+
   return (
     
     <Card
@@ -292,34 +335,34 @@ const EpisodeCard = observer(function EpisodeCard({
             size="xxs"
             // accessibilityLabel={episode.datePublished.accessibilityLabel}
           >
-            {temp}
+            {episode.date}
           </Text>
         
         </View>
       }
-      content={`${episode.parsedTitleAndSubtitle.title} - ${episode.parsedTitleAndSubtitle.subtitle}`}
+      content={`${episode.name}`}
       {...accessibilityHintProps}
       RightComponent={
     
       <Text>
-        $$$
+        ${episode.money}
       </Text>
     }
     
 
       FooterComponent={
         <View style={$overUnderView}>
-          <TouchableOpacity disabled={true}>
-          <Pressable style={styles.buttonGreen}>
+          {/* <TouchableOpacity > */}
+          <Pressable style={styles.buttonGreen}  onPress={() => console.log('Button pressed!')}>
             <Text style={styles.text}>Yes</Text>
           </Pressable>
-          </TouchableOpacity>
+          {/* </TouchableOpacity> */}
         
         <Text>
         {"\u00A0"}
         </Text>
         
-        <Pressable style={styles.buttonRed}>
+        <Pressable style={styles.buttonRed}  onPress={() => console.log('Button pressed!')}>
             <Text style={styles.text}>No</Text>
           </Pressable>
           
@@ -435,7 +478,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     borderRadius: 4,
     elevation: 3,
-    backgroundColor: '#B2C4A7',
+    backgroundColor: '#4CAF50',
   },
   buttonRed: {
     alignItems: 'center',
@@ -444,7 +487,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     borderRadius: 4,
     elevation: 3,
-    backgroundColor: '#F7BFBB',
+    backgroundColor: '#F44336',
   },
   text: {
     fontSize: 16,
